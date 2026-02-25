@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cb9c1f19d34f384d92952b25f0c46fa, type: 3}
+  m_Name: Refiner
+  m_EditorClassIdentifier: Assembly-CSharp::TileDefinition
+  tileType: 1
+  displayName: Refiner
+  description: 
+  icon: {fileID: 7482667652216324306, guid: c93d08451ce31e542a37ffd039121cec, type: 3}
+  baseValue: 0
+  refinerMultiplier: 2
+  shopCost: 25
+  unlockAtGoal: 0
