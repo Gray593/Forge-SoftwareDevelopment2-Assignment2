@@ -28,6 +28,24 @@ Low Priority:
 * The player should recieve notifications when a goal is completed
 ## 2.0 System Requirements
 
+Functional Requirements 
+
+* The game will take place on a eight by eight grid
+
+* Tiles can be placed in unoccupied grid cells
+
+* A tick mechanism will be utilised to update the balance value
+
+* Every tick, tile chains will evaluate tile chains placed on the grid
+
+* The value of tile chains will be calculated by multiplying the mines base value by the value of the refiners 
+
+* Every tick the system will check if the goal has been met
+
+* The goal is multiplied incrementally after it has been met
+
+Non-Functional Requirements
+
 ## 3.0 Scrum Backlog 
 
 ## 4.0 Design Breakdown
