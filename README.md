@@ -46,9 +46,11 @@ Functional Requirements
 
 Non-Functional Requirements
 
-* The user will control the game through a computer mouse
+* The user will control the game using a computer mouse
 
-* 
+* The game will be utilise the unity game engine
+
+* The game will be responsive and any changes to the gameplay grid will be implemented before the next tick
 ## 3.0 Scrum Backlog 
 
 ## 4.0 Design Breakdown
