@@ -114,7 +114,14 @@ The Tile Definition script is a Unity Scriptable Object this acts as a template 
 
 The Game Manager script acts as the control hub of the game. It manages the tick system, the goal system and the in game balance. As well as informing other scripts of changes to the balance and when the goal as been met. The game manager follows the Singleton design pattern this ensures that only one instance of the GameManager class exists at a time. The development of this class was greatly assisted by both a gamedevbeginner(French, 2024b) article and a Medium(Erol, 2022) article.
 ### 5.3 GridManager.cs
+![displaysGridManager.cs](./ReportImages/GridManager.png)
+![displaysGridManager2.cs](./ReportImages/GridManager2.png)
+![displaysGridManager3.cs](./ReportImages/GridManager3.png)
+![displaysGridManager4.cs](./ReportImages/GridManager4.png)
+
+The Grid Manager script is the most complex script in the game it creates the grid both logically and visually. Manages tile placement and removal, as well as calculating the value of chains of tiles utilising a breadth first search. To create this search this geeks for geeks article was used (geeksforgeeks, 2023).
 ### 5.4 AudioManager.cs
+
 ### 5.5 GridCell.cs
 ### 5.6 DragHandler.cs
 ### 5.7 InventorySlot.cs
