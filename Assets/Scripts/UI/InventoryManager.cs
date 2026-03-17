@@ -2,10 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-// Manages the inventory panel on the left side of the screen.
-// Tiles bought from the shop are added here.
-// Players drag tiles from here onto the grid.
-
+// Manages the inventory panel as a whole
 public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager Instance { get; private set; }
@@ -19,13 +16,13 @@ public class InventoryManager : MonoBehaviour
         new Dictionary<TileDefinition, InventorySlot>();
 
     
-    private void Awake()
+    private void Awake() // Destroys any other instances of itself
     {
         if (Instance != null && Instance != this) { Destroy(gameObject); return; }
         Instance = this;
     }
 
-    //Called by ShopSlot when a tile is purchased
+    // This function adds a tile to the inventory when it is purchased from the shop
     public void AddTile(TileDefinition tile)
     {
         if (_slots.TryGetValue(tile, out InventorySlot existing))
@@ -34,24 +31,24 @@ public class InventoryManager : MonoBehaviour
             return;
         }
 
-        // First time this tile type has been added — create a new slot
+        // Creates a new slot if this is the first time purchasing this type of tile
         InventorySlot slot = Instantiate(inventorySlotPrefab, inventorySlotParent);
         slot.Init(tile);
         slot.AddToCount(1);
         _slots[tile] = slot;
     }
 
-    //Called by GridCell when a tile is removed from the grid 
+    // Is called when a tile is returned to the inventory to increment count and create a slot if it doesn't already have one 
     public void ReturnTile(TileDefinition tile)
     {
         if (tile == null) return;
         if (_slots.TryGetValue(tile, out InventorySlot slot))
             slot.AddToCount(1);
         else
-            AddTile(tile); // edge case: slot doesn't exist yet, create it
+            AddTile(tile);
     }
 
-    // Called by DragHandler to decrement count after placement 
+    // Decrements the count after a tile has been placed
     public void OnTilePlaced(TileDefinition tile)
     {
         if (_slots.TryGetValue(tile, out InventorySlot slot))

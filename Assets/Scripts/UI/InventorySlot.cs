@@ -3,9 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-// Represents one tile type in the inventory panel on the left.
-// Shows how many of that tile the player currently owns.
-// Spawns a ghost copy when dragged onto the grid.
+// This class represents one inventory slot in the inventory panel 
 
 public class InventorySlot : MonoBehaviour
 {
@@ -18,7 +16,7 @@ public class InventorySlot : MonoBehaviour
     public int            Count         { get; private set; }
     public bool           CanDrag       => Count > 0;
 
-    
+    //sets the slot properties to that of the tile inside it
     public void Init(TileDefinition tile)
     {
         Tile = tile;
@@ -26,32 +24,31 @@ public class InventorySlot : MonoBehaviour
         if (nameText)  nameText.text    = tile.displayName;
         RefreshUI();
 
-        // Wire up drag handler on the icon
         DragHandler drag = iconImage.GetComponent<DragHandler>();
         if (drag != null)
             drag.InitFromInventory(tile, this);
     }
 
-    //Count Management
+    // Increments count when a new version of the tile in this slot is bought
     public void AddToCount(int amount = 1)
     {
         Count += amount;
         RefreshUI();
     }
-
+    // Decrements count 
     public void RemoveFromCount(int amount = 1)
     {
         Count = Mathf.Max(0, Count - amount);
         RefreshUI();
     }
 
-    //Called by DragHandler after successful grid placement
+    // Decrements count when a tile is placed 
     public void OnTilePlaced()
     {
         RemoveFromCount(1);
     }
 
-    //UI
+    //refreshes the UI when action has taken place involving this tile
     private void RefreshUI()
     {
         if (countText) countText.text = $"x{Count}";

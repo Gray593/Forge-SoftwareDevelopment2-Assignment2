@@ -4,8 +4,7 @@ using TMPro;
 using UnityEngine;
 
 
-// Shows brief on-screen notification toasts.
-// Assign a UI panel with a TMP_Text child as the toastPrefab.
+// Displays notifications when the goal is met
 
 public class NotificationManager : MonoBehaviour
 {
