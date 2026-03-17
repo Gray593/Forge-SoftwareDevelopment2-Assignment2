@@ -16,7 +16,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Slider   goalProgressBar;
 
     [Header("Tick Progress")]
-    [SerializeField] private Slider   tickProgressBar;   // optional visual tick timer
+    [SerializeField] private Slider   tickProgressBar;  
 
     
     private void Start()
@@ -26,7 +26,7 @@ public class UIManager : MonoBehaviour
         gm.OnGoalChanged    += UpdateGoal;
         gm.OnGoalCompleted  += OnGoalCompleted;
 
-        // Initialise displays
+        // Initialise the balance and the current goal
         UpdateBalance(gm.Balance);
         UpdateGoal(gm.CurrentGoal);
     }
@@ -39,7 +39,7 @@ public class UIManager : MonoBehaviour
         GameManager.Instance.OnGoalCompleted  -= OnGoalCompleted;
     }
 
-    //Callbacks
+    // Callback functions to update the balance and the goal 
     private void UpdateBalance(float balance)
     {
         if (balanceText)
@@ -55,7 +55,7 @@ public class UIManager : MonoBehaviour
         if (goalText)
             goalText.text = $"Goal: £ {FormatNumber(goal)}";
 
-        // Reset progress bar to current fraction
+        // Updates the progress bar to accurately reflect goal completion percentage
         if (goalProgressBar)
             goalProgressBar.value = Mathf.Clamp01(GameManager.Instance.Balance / goal);
     }
@@ -66,10 +66,10 @@ public class UIManager : MonoBehaviour
         AudioManager.Instance?.PlayGoalComplete();
     }
 
-    //Tick Progress
+    // Updates every frame
     private void Update()
     {
-        // Animate the optional tick bar so players can see when the next tick is
+        // Animates the tick bar great for testing may remove later if the ui is too convoluted 
         if (tickProgressBar && GameManager.Instance != null)
         {
             float interval   = GameManager.Instance.TickInterval;
@@ -78,7 +78,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    //Number Formatter
+    // Formats the goal and balance number to make them more readable when they exceed a certain size
     private string FormatNumber(float n)
     {
         if (n >= 1_000_000_000) return $"{n / 1_000_000_000f:0.##}B";

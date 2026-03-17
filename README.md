@@ -155,6 +155,7 @@ The Shop Slot class manages an individual slot in the shop panel. It is used to 
 
 The Shop Manager class is utilised to create a shop slot for every tile definition
 ### 5.11 UIManager.cs
+![UIManager.cs](./ReportImages/UIManager.png)
 
 ### 5.12 NotificationManager.cs
 ### 5.13 CreateTileSprites.cs
