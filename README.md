@@ -101,9 +101,19 @@ When tiles are placed, bought or sold appropriate sound queues should be played
 #### Notification System
 When Goals are met a notification should be sent to the users informing them that they have met the current goal
 
-## 4.0 Design Breakdown
+## 4.0 Design Documentation
+Forge is a simple 2D factory builder game that takes place on a grid. Gameplay consists of making chains of tiles on the grid that start with a mine tile and end with a forge tile. Refiner tiles can be placed in the middle section of the chain to further multiply the balance generated. The main gameplay loop consists of the player making tile chains to generate balance to meet a goal. When a goal is met, it is multiplied therefore increasing difficulty and forcing the player to redesign their tile based factory.
 
-## 5.0 Functional Breakdown
+Forge will be developed using unity 6.3, the game will be playable on windows and distributed via Steam/Epic Games. To play Forge the player only needs a mouse as all gameplay functions are click based. Keyboard shortcuts may be added later. The Target Audience of Forge are people who enjoy factory and idle games, as the core gameplay loop is very reminiscent of other factory games but heavily simplified. This makes Forge a great entry level game for players looking to get into the factory game genre.
+
+The main gameplay loop of forge can be summarised by the below state diagram: 
+![ForgeLowFidel.cs](./ReportImages/ForgeLowDesign.png)
+Above is a low fidelity design of the games user interface
+![ForgeHighFidel.cs](./ReportImages/ForgeHighDesign.png)
+Above is a high fidelity design of the games user interface
+
+
+## 5.0 Development Breakdown
 ### 5.1 TileDefinition.cs
 ![displaysTileDefinition.cs](./ReportImages/TileDefinition.png)
 The Tile Definition script is a Unity Scriptable Object this acts as a template for all the different tile types utilised in Forge and could be expanded on in future to add more tile types. The script consists of two main sections the enumeration used to identify the type of tile and the class declaration that creates a range of variables that can be interacted with in the unity inspector. Both the unity documentation(Unity Technologies, 2024a) and gamedevbeginner(French, 2024a) tutorial helped greatly when developing this script.
@@ -163,7 +173,7 @@ The UI Manager class subscribes to the events from the Game Manager class and up
 ![NotificationManager.cs](./ReportImages/NotificationManager.png)
 ![NotificationManager2.cs](./ReportImages/NotificationManager2.png)
 
-The Notification Manager Class queues up and displays toast notifications before destroying them, this was accomplished using coroutines. When developing this class both the Unity documentation on coroutines (Unity Technologies, 2024c) and the unity learn tutorial were particularly helpful (Unity Learn, 2026).
+The Notification Manager Class queues up and displays toast notifications before destroying them, this was accomplished using coroutines. When developing this class both the Unity documentation on coroutines (Unity Technologies, 2024b) and the unity learn tutorial were particularly helpful (Unity Learn, 2026).
 
 ## 6.0 Project Management
  
@@ -172,3 +182,13 @@ The Notification Manager Class queues up and displays toast notifications before
 ## 8.0 Testing
 
 ## 9.0 References
+Duggan, S. (2024) Unity UI — Drag and Drop Inventory System, Medium. Available at: https://medium.com/@sean.duggan/unity-ui-drag-and-drop-inventory-system-ae84d1173d3e (Accessed: 17 March 2026).
+Erol, I.U. (2022) Implementing the Singleton Design Pattern in Unity with C#, Medium. Available at: https://medium.com/@tzdevil/using-the-singleton-design-pattern-in-unity-c-226bf8aa5304 (Accessed: 17 March 2026).
+French, J. (2024a) Scriptable Objects in Unity, Game Dev Beginner. Available at: https://gamedevbeginner.com/scriptable-objects-in-unity/ (Accessed: 17 March 2026).
+French, J. (2024b) Singletons in Unity (done right), Game Dev Beginner. Available at: https://gamedevbeginner.com/singletons-in-unity-the-right-way/ (Accessed: 17 March 2026).
+French, J. (2024c) How to play audio in Unity (with examples), Game Dev Beginner. Available at: https://gamedevbeginner.com/how-to-play-audio-in-unity-with-examples/ (Accessed: 17 March 2026).
+GeeksforGeeks (2023) Breadth First Search or BFS for a Graph. Available at: https://www.geeksforgeeks.org/dsa/breadth-first-search-or-bfs-for-a-graph/ (Accessed: 17 March 2026).
+Unity Learn (2026) Coroutines, Unity Technologies. Available at: https://learn.unity.com/tutorial/coroutines (Accessed: 17 March 2026).
+Unity Technologies (2024a) Introduction to ScriptableObjects, Unity Learn. Available at: https://learn.unity.com/tutorial/introduction-to-scriptable-objects (Accessed: 17 March 2026).
+Unity Technologies (2024b) Write and run coroutines, Unity Manual. Available at: https://docs.unity3d.com/Manual/Coroutines.html (Accessed: 17 March 2026).
+Unity Technologies (2025a) AudioSource.PlayOneShot, Unity Scripting API. Available at: https://docs.unity3d.com/ScriptReference/AudioSource.PlayOneShot.html (Accessed: 17 March 2026).
