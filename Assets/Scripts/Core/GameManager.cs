@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance { get; private set; } // static is used to create one shared copy across all instances and private set prevents external overwriting  
+    public static GameManager Instance { get; private set; } // static is used to create one shared copy across all 
+    // instances and private set prevents external overwriting  
 
     // Events notify other scripts when something happens, in the case of the first two a float is passed to the other scripts
     public event Action<float> OnBalanceChanged; 
@@ -24,7 +25,8 @@ public class GameManager : MonoBehaviour
     public int   GoalsCompleted { get; private set; }
     private float _tickTimer;
 
-    // Runs when the object is created to destroy any duplicate instances then sets the current goal to the previously assigned starting goal
+    // Runs when the object is created to destroy any duplicate instances then sets the current goal to the previously 
+    // assigned starting goal
     private void Awake()
     {
         if (Instance != null && Instance != this) { Destroy(gameObject); return; }
@@ -32,7 +34,8 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         CurrentGoal = startingGoal;
     }
-    // The update function runs every frame and is used to control the tick timer and then running the DoTick function when the condition is met 
+    // The update function runs every frame and is used to control the tick timer and then running the DoTick 
+    // function when the condition is met 
     private void Update()
     {
         _tickTimer += Time.deltaTime;
