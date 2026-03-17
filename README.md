@@ -67,27 +67,39 @@ Tiles should be able to be dragged from the inventory onto the grid, the tile sh
 Already placed cells should be able to be dragged from one cell to another. If a tile is dragged off of the grid it is returned to the inventory.
 
 #### Mine Tile
+Mine tiles act as the starting point of tile chains and are assigned a base value that is multiplied upon by refiner tiles every tick
 
 #### Refiner Tile
+When placed in a chain refiner tiles adjust the value of the chain by a fixed multiplier  
 
 #### Forge Tile
+Forge tiles are the endpoints of tile chains and update the balance every tick by the value of the tile chain
 
 #### Tick System
+The tick system exists as a fixed interval that is used as to determine frequency of balance updates 
 
 #### Goal System 
+Goals act as a numerical target for players to meet that is then incrementally increased after each goal has been achieved 
 
 #### Tile Shop
+The shop allows the player to purchase new tiles, when tiles are purchased they are added to the inventory 
 
 #### Tile Inventory 
+Records and displays tiles bought by the player
 
+### Medium Priority:
 #### Return Tiles to Inventory
+Tiles that have been dragged off of the grid or have been placed in an invalid location are returned back to the grid
 
 #### Tile Unlock System
+Certain tiles will be unlocked to buy from the shop when certain goals are met
 
+### Low Priority 
 #### Game Audio
+When tiles are placed, bought or sold appropriate sound queues should be played
 
 #### Notification System
-
+When Goals are met a notification should be sent to the users informing them that they have met the current goal
 
 ## 4.0 Design Breakdown
 
