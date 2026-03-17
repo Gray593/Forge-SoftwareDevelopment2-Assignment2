@@ -146,6 +146,10 @@ The Inventory Slot class represents one inventory slot in the players inventory 
 
 The Inventory Manager class manages the inventory as a whole, it assigns new tiles to an inventory slot when purchased, creates slots when a tile is purchased that is the first of its kind and decrements the tile count when a tile is placed.
 ### 5.9 ShopSlot.cs
+![ShopSlot1.cs](./ReportImages/ShopSlot1.png)
+![ShopSlot2.cs](./ReportImages/ShopSlot2.png)
+
+The Shop Slot class manages an individual slot in the shop panel. It is used to determine whether a user has unlocked a specific tile yet and allows them to purchase tiles and send them to the inventory.
 ### 5.10 ShopManager.cs
 ### 5.11 UIManager.cs
 ### 5.12 NotificationManager.cs

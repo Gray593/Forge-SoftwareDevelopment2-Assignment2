@@ -3,9 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-// Represents one tile type in the shop.
-// Handles purchasing and lock state only.
-// Inventory tracking is handled by InventoryManager.
+// The Shop Slot class represents one slot in the shop panel 
 
 public class ShopSlot : MonoBehaviour
 {
@@ -21,7 +19,8 @@ public class ShopSlot : MonoBehaviour
 
     private bool _unlocked = false;
 
-    //Init
+    //The Init function assigns all the properties of a tile to its specific slot and creates an event listener for when the 
+    // tile is bought
     public void Init(TileDefinition tile)
     {
         Tile = tile;
@@ -36,7 +35,7 @@ public class ShopSlot : MonoBehaviour
         buyButton.onClick.AddListener(OnBuyClicked);
     }
 
-    //Unlock
+    // This function checks if the tile in this slot can be unlocked yet and therefore purchased
     public void CheckUnlock(int goalsCompleted)
     {
         if (!_unlocked && goalsCompleted >= Tile.unlockAtGoal)
@@ -47,7 +46,7 @@ public class ShopSlot : MonoBehaviour
         }
     }
 
-    //Buy
+    // This function is called when the user tries to buy a tile and determines if they can or not 
     private void OnBuyClicked()
     {
         if (!_unlocked) return;
@@ -57,7 +56,7 @@ public class ShopSlot : MonoBehaviour
         AudioManager.Instance?.PlayPurchase();
     }
 
-    //UI
+    // Similar to the function in the inventory slot class this function refreshes the ui after an action has taken place
     private void RefreshUI()
     {
         if (lockedOverlay) lockedOverlay.SetActive(!_unlocked);
