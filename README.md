@@ -151,6 +151,8 @@ The Inventory Manager class manages the inventory as a whole, it assigns new til
 
 The Shop Slot class manages an individual slot in the shop panel. It is used to determine whether a user has unlocked a specific tile yet and allows them to purchase tiles and send them to the inventory.
 ### 5.10 ShopManager.cs
+
+
 ### 5.11 UIManager.cs
 ### 5.12 NotificationManager.cs
 ### 5.13 CreateTileSprites.cs

@@ -2,8 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-// Spawns and manages all ShopSlots.
-// Assign your TileDefinition assets in the Inspector.
+// This class manages all shop slots present in the shop panel
 
 public class ShopManager : MonoBehaviour
 {
@@ -19,13 +18,13 @@ public class ShopManager : MonoBehaviour
     private List<ShopSlot> _slots = new List<ShopSlot>();
 
     
-    private void Awake()
+    private void Awake() // destroys any other instances of this class
     {
         if (Instance != null && Instance != this) { Destroy(gameObject); return; }
         Instance = this;
     }
 
-    private void Start()
+    private void Start() // creates a shop slot for each tile definition
     {
         foreach (TileDefinition def in tileDefinitions)
         {
