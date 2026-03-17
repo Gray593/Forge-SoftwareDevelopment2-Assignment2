@@ -1,42 +1,38 @@
 using System;
 using UnityEngine;
 
-// Core singleton. Owns balance, the goal system, and the tick timer.
+// The game manager class exists to control the in game balance, goal management and tick system 
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance { get; private set; }
+    public static GameManager Instance { get; private set; } // static is used to create one shared copy across all instances and private set prevents external overwriting  
 
-    //Events
-    public event Action<float> OnBalanceChanged;   // new balance value
-    public event Action<float> OnGoalChanged;      // new goal target
-    public event Action        OnGoalCompleted;    // fired once per completion
+    // Events notify other scripts when something happens, in the case of the first two a float is passed to the other scripts
+    public event Action<float> OnBalanceChanged; 
+    public event Action<float> OnGoalChanged;     
+    public event Action        OnGoalCompleted;   
 
-    //Inspector
+    // The below values appear in the inspector to control the time between ticks and the starting goal and the goal multiplier 
     [Header("Tick Settings")]
-    [SerializeField] private float tickInterval = 2f;   // seconds between ticks
-
+    [SerializeField] private float tickInterval = 2f;   
     [Header("Goal Settings")]
     [SerializeField] private float startingGoal    = 50f;
-    [SerializeField] private float goalMultiplier  = 2.5f;  // how much harder each goal gets
+    [SerializeField] private float goalMultiplier  = 5f; 
 
-    //State
     public float Balance       { get; private set; }
     public float CurrentGoal   { get; private set; }
     public int   GoalsCompleted { get; private set; }
-
     private float _tickTimer;
 
-    
+    // Runs when the object is created to destroy any duplicate instances then sets the current goal to the previously assigned starting goal
     private void Awake()
     {
         if (Instance != null && Instance != this) { Destroy(gameObject); return; }
         Instance = this;
         DontDestroyOnLoad(gameObject);
-
         CurrentGoal = startingGoal;
     }
-
+    // The update function runs every frame and is used to control the tick timer and then running the DoTick function when the condition is met 
     private void Update()
     {
         _tickTimer += Time.deltaTime;
@@ -47,7 +43,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    //Tick
+    // is called by the previous function to evaluate all tile chains and then update the balance
     private void DoTick()
     {
         float earned = GridManager.Instance.EvaluateAllChains();
@@ -55,7 +51,7 @@ public class GameManager : MonoBehaviour
             AddBalance(earned);
     }
 
-    //Balance
+    // increases the balance, notifies the subscribed scripts and then checks the goal
     public void AddBalance(float amount)
     {
         Balance += amount;
@@ -63,6 +59,7 @@ public class GameManager : MonoBehaviour
         CheckGoal();
     }
 
+    // if the user has enough balance deducts the amount from the balance and then returns true
     public bool SpendBalance(float amount)
     {
         if (Balance < amount) return false;
@@ -71,23 +68,18 @@ public class GameManager : MonoBehaviour
         return true;
     }
 
-    //Goals
+    // Evaluates the balance against the goal, completes the goal then notifies subscribed scripts then updates the goal,  
+    // notifies subscribed scripts and refreshes the shop for new tile unlocks
     private void CheckGoal()
     {
         if (Balance >= CurrentGoal)
         {
             GoalsCompleted++;
             OnGoalCompleted?.Invoke();
-
-            // Advance to next goal
             CurrentGoal *= goalMultiplier;
             OnGoalChanged?.Invoke(CurrentGoal);
-
-            // Notify the shop that a new goal tier may have unlocked tiles
             ShopManager.Instance?.RefreshUnlocks(GoalsCompleted);
         }
     }
-
-    //Helpers
     public float TickInterval => tickInterval;
 }
