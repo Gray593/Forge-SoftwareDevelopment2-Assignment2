@@ -2,14 +2,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-// Manages the logical grid (a 2-D array of TileDefinitions).
-// Evaluates balance from all valid Mine → Refiner* → Forge chains each tick.
+// This class exists to manage the in game grid 
 
 public class GridManager : MonoBehaviour
 {
     public static GridManager Instance { get; private set; }
 
-    //Inspector
+    // values that are displayed in the inspector 
     [Header("Grid Size")]
     [SerializeField] private int columns = 8;
     [SerializeField] private int rows    = 8;
@@ -19,32 +18,31 @@ public class GridManager : MonoBehaviour
     [SerializeField] private Transform  cellParent;   // GridPanel RectTransform
     [SerializeField] private float      cellSize = 100f;
 
-    //State
+    
     private TileDefinition[,] _grid;   // logical grid
     private GridCell[,]       _cells;  // visual cells
-
     public int Columns => columns;
     public int Rows    => rows;
 
-    //Adjacent directions (N / S / E / W)
+    // Creates an array that contains directions to later be used in the breadth first search
     private static readonly Vector2Int[] Directions =
     {
         Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right
     };
 
-    
-    private void Awake()
+    // runs on the objects creation destroys duplicates of this object then creates two arrays one for the tiles placed and 
+    // the other for the cell references
+    private void Awake() 
     {
-        if (Instance != null && Instance != this) { Destroy(gameObject); return; }
+        if (Instance != null && Instance != this) { Destroy(gameObject); return; } 
         Instance = this;
-
         _grid  = new TileDefinition[columns, rows];
         _cells = new GridCell[columns, rows];
     }
-
+    // runs the first frame the object is active
     private void Start() => SpawnVisualCells();
 
-    //Visual Cell Spawning
+    // this function loops through every grid position and creates a gridcell prefab named after its coordinates 
     private void SpawnVisualCells()
     {
         for (int x = 0; x < columns; x++)
@@ -52,37 +50,32 @@ public class GridManager : MonoBehaviour
         {
             GameObject go = Instantiate(cellPrefab, cellParent);
             go.name = $"Cell_{x}_{y}";
-
-            // UI grids use RectTransform — positive Y goes UP so we negate it
-            // so row 0 is at the top and rows increase downward
-            RectTransform rt = go.GetComponent<RectTransform>();
+            RectTransform rt = go.GetComponent<RectTransform>();  // Inverts the y axis
             rt.anchoredPosition = new Vector2(x * cellSize, -y * cellSize);
-
             GridCell cell = go.GetComponent<GridCell>();
-            cell.Init(x, y);
+            cell.Init(x, y); // tells the cell its own coordinates then stores the result
             _cells[x, y] = cell;
         }
     }
 
-    //Placement 
+    // this function handles placing tiles 
     public bool TryPlaceTile(int x, int y, TileDefinition tile)
     {
-        if (!IsInBounds(x, y))  return false;
-        if (_grid[x, y] != null) return false;   // cell already occupied
-
-        _grid[x, y] = tile;
-        _cells[x, y].SetTile(tile);
-        return true;
+        if (!IsInBounds(x, y))  return false; // checks if the tile is outside the grid
+        if (_grid[x, y] != null) return false;   // checks if the grid cell is already occupied
+        _grid[x, y] = tile; // stores the tiles x and y in the grid
+        _cells[x, y].SetTile(tile); // updates the display
+        return true; 
     }
-
+    // This function handles removing tiles 
     public bool TryRemoveTile(int x, int y)
     {
         if (!IsInBounds(x, y) || _grid[x, y] == null) return false;
-        _grid[x, y] = null;
-        _cells[x, y].ClearTile();
+        _grid[x, y] = null; //clears the grid entry
+        _cells[x, y].ClearTile(); // removes the tile from the display
         return true;
     }
-
+    // the below functions are used to determine whether a tile is in bounds and whether the cell is occupied
     public TileDefinition GetTile(int x, int y) =>
         IsInBounds(x, y) ? _grid[x, y] : null;
 
@@ -92,12 +85,7 @@ public class GridManager : MonoBehaviour
     public bool IsInBounds(int x, int y) =>
         x >= 0 && x < columns && y >= 0 && y < rows;
 
-    // ── Chain Evaluation ──────────────────────────────────────────────────
-    /// <summary>
-    /// Called every tick by GameManager.
-    /// Finds every Mine, then BFS through adjacent Refiners to reach Forges.
-    /// Returns total balance earned this tick.
-    /// </summary>
+    // scans all cells in the grid for mines, then evaluates each chain before returning the balance total for the in game tick 
     public float EvaluateAllChains()
     {
         float total = 0f;
@@ -113,25 +101,18 @@ public class GridManager : MonoBehaviour
         return total;
     }
 
-    /// <summary>
-    /// BFS from a Mine through adjacent Refiners.
-    /// When we reach a cell adjacent to a Forge we complete the chain.
-    /// Chain value = mine.baseValue * product of all refiner multipliers along path.
-    /// We accumulate contributions from ALL reachable Forges.
-    /// </summary>
+    // This function utilises a breadth first search to calculate the total for each chain by starting at a mine, taking the base value
+    // then multiplying it along a chain of refiners before stopping at a forge.
     private float EvaluateMine(int mx, int my, HashSet<Vector2Int> usedForges)
     {
         TileDefinition mine = _grid[mx, my];
         float total = 0f;
-
-        // Each queue entry: (position, accumulated multiplier so far)
-        Queue<(Vector2Int pos, float multiplier)> queue = new Queue<(Vector2Int, float)>();
-        HashSet<Vector2Int> visited = new HashSet<Vector2Int>();
-
+        Queue<(Vector2Int pos, float multiplier)> queue = new Queue<(Vector2Int, float)>(); //queue entries store the position 
+        // and current multiplier
+        HashSet<Vector2Int> visited = new HashSet<Vector2Int>(); // Hashset is used to prevent visiting the same tile twice
         Vector2Int minePos = new Vector2Int(mx, my);
         queue.Enqueue((minePos, 1f));
         visited.Add(minePos);
-
         while (queue.Count > 0)
         {
             var (current, mult) = queue.Dequeue();
@@ -147,21 +128,19 @@ public class GridManager : MonoBehaviour
 
                 visited.Add(neighbour);
 
-                if (neighbourTile.tileType == TileType.Forge)
+                if (neighbourTile.tileType == TileType.Forge) // checks if the chain is complete
                 {
-                    // Chain is complete — only count each Forge once per tick
-                    if (!usedForges.Contains(neighbour))
+                    
+                    if (!usedForges.Contains(neighbour)) // only counts each forge once
                     {
                         usedForges.Add(neighbour);
                         total += mine.baseValue * mult;
                     }
                 }
-                else if (neighbourTile.tileType == TileType.Refiner)
+                else if (neighbourTile.tileType == TileType.Refiner) // if the neighbouring tile is a refiner carries on the search
                 {
-                    // Continue BFS through Refiner, apply its multiplier
                     queue.Enqueue((neighbour, mult * neighbourTile.refinerMultiplier));
                 }
-                // Mines block the path (don't traverse through another Mine)
             }
         }
 
