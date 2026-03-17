@@ -14,7 +14,6 @@ public class InventoryManager : MonoBehaviour
     // Lookup by TileDefinition
     private Dictionary<TileDefinition, InventorySlot> _slots =
         new Dictionary<TileDefinition, InventorySlot>();
-
     
     private void Awake() // Destroys any other instances of itself
     {

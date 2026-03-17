@@ -136,7 +136,15 @@ The Grid Cell class is attached to every cell in the eight by eight game grid an
 
 The Drag Handler class allows for the user to drag tiles from the inventory to the game board and allows for tile to be dragged from one cell on the board to another. It does this by creating a ghost copy of the tile and then deleting the copy when the tile is placed 
 ### 5.7 InventorySlot.cs
+![InventorySlot.cs](./ReportImages/InventorySlot.png)
+![InventorySlot2.cs](./ReportImages/InventorySlot2.png)
+
+The Inventory Slot class represents one inventory slot in the players inventory and is responsible for adding and subtracting from the total of the tile in the slot and refreshing the UI when any action involving the slot has taken place.
 ### 5.8 InventoryManager.cs
+![InventoryManager1.cs](./ReportImages/InventoryManager1.png)
+![InventoryManager2.cs](./ReportImages/InventoryManager2.png)
+
+The Inventory Manager class manages the inventory as a whole, it assigns new tiles to an inventory slot when purchased, creates slots when a tile is purchased that is the first of its kind and decrements the tile count when a tile is placed.
 ### 5.9 ShopSlot.cs
 ### 5.10 ShopManager.cs
 ### 5.11 UIManager.cs
