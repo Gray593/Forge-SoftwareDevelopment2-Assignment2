@@ -106,7 +106,9 @@ Forge is a simple 2D factory builder game that takes place on a grid. Gameplay c
 
 Forge will be developed using unity 6.3, the game will be playable on windows and distributed via Steam/Epic Games. To play Forge the player only needs a mouse as all gameplay functions are click based. Keyboard shortcuts may be added later. The Target Audience of Forge are people who enjoy factory and idle games, as the core gameplay loop is very reminiscent of other factory games but heavily simplified. This makes Forge a great entry level game for players looking to get into the factory game genre.
 
-The main gameplay loop of forge can be summarised by the below state diagram: 
+The main gameplay loop of forge can be summarised by the below state diagram:
+![StateDiagram.cs](./ReportImages/StateDiagram.png)
+
 ![ForgeLowFidel.cs](./ReportImages/ForgeLowDesign.png)
 Above is a low fidelity design of the games user interface
 ![ForgeHighFidel.cs](./ReportImages/ForgeHighDesign.png)
@@ -181,7 +183,7 @@ The Notification Manager Class queues up and displays toast notifications before
 
 ## 8.0 Testing
 
-## 9.0 References
+## References
 Duggan, S. (2024) Unity UI — Drag and Drop Inventory System, Medium. Available at: https://medium.com/@sean.duggan/unity-ui-drag-and-drop-inventory-system-ae84d1173d3e (Accessed: 17 March 2026).
 Erol, I.U. (2022) Implementing the Singleton Design Pattern in Unity with C#, Medium. Available at: https://medium.com/@tzdevil/using-the-singleton-design-pattern-in-unity-c-226bf8aa5304 (Accessed: 17 March 2026).
 French, J. (2024a) Scriptable Objects in Unity, Game Dev Beginner. Available at: https://gamedevbeginner.com/scriptable-objects-in-unity/ (Accessed: 17 March 2026).
