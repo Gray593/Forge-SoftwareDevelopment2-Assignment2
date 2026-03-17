@@ -1,19 +1,17 @@
 using UnityEngine;
 
-public enum TileType
+public enum TileType // the different types of tiles set as a enum so mine is 0 refiner is 1 and forge is 2
 {
     Mine,
     Refiner,
     Forge
 }
 
-/// <summary>
-/// ScriptableObject that defines a tile's properties.
-/// Create assets via: Right-click in Project > Create > Forge > TileDefinition
-/// </summary>
-[CreateAssetMenu(fileName = "NewTile", menuName = "Forge/TileDefinition")]
-public class TileDefinition : ScriptableObject
+
+[CreateAssetMenu(fileName = "NewTile", menuName = "Forge/TileDefinition")] // creates a new option in thr tight click create menu
+public class TileDefinition : ScriptableObject // tile definition inherits from the scriptable object unity base class
 {
+    // the below lines of code establish input fields in the unity inspector
     [Header("Identity")]
     public TileType tileType;
     public string displayName;
