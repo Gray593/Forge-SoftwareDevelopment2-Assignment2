@@ -114,6 +114,9 @@ Above is a low fidelity design of the games user interface
 ![ForgeHighFidel.cs](./ReportImages/ForgeHighDesign.png)
 Above is a high fidelity design of the games user interface
 
+As can be seen from both the above designs, Forges user interface is quite simple but that is one of its main strengths as this is what allows anybody to play the game. The most prominent feature of the design is the gameplay grid as this is where most of the game takes place as both the outer panels are just menus.
+
+
 
 ## 5.0 Development Breakdown
 ### 5.1 TileDefinition.cs
@@ -178,9 +181,43 @@ The UI Manager class subscribes to the events from the Game Manager class and up
 The Notification Manager Class queues up and displays toast notifications before destroying them, this was accomplished using coroutines. When developing this class both the Unity documentation on coroutines (Unity Technologies, 2024b) and the unity learn tutorial were particularly helpful (Unity Learn, 2026).
 
 ## 6.0 Project Management
- 
-## 7.0 Coding Techniques and Software Tools
+### 6.1 Meeting Logs
+Below are logs from the four meetings that were conducted throughout the project, all four are dated and aim to answer the prerequisite questions of, what has been accomplished since the last, what will be accomplished by the next meeting and any potential problems that may arise.
+![FirstMeeting.cs](./ReportImages/FirstMeeting.png)
+![SecondMeeting.cs](./ReportImages/SecondMeeting.png)
+![ThirdMeeting.cs](./ReportImages/ThirdMeeting.png)
+![ForthMeeting.cs](./ReportImages/ForthMeeting.png)
 
+### 6.2 Burndown Chart
+![BurndownChart.cs](./ReportImages/BurndownChart.png)
+
+## 7.0 Coding Techniques and Software Tools
+### 7.1 Tools Used
+* Unity 6.3 - Unity was used as the game engine of choice for this project due to previous experience using the game engine
+* VS Code - VS Code was used in conjunction with unity as the IDE for all C# scripts used
+* Git - Git has been utilised to maintain version control
+* Github - github has been used to host a remote repository 
+* TextMeshPro - used to render text in game
+* Unity UI - used to create a canvas based user interface
+
+### 7.2 Coding Techniques
+Scriptable objects
+Scriptable objects were utilised in Forge to add a layer of separation between data and behavior. This can be observed in the different tile types. All tiles use the same Tile definition script but differ in the Unity inspector window.
+
+Singleton Pattern
+The Singleton Pattern is used throughout Forges scripts and is found in any class with Manager in the title. This allows for an easier time when accessing information in other classes as it prevents the need for a lot of object references.
+
+Breadth First Search
+A breadth first search is utilised in the evaluate all chains function in the grid manager class to interpret tile chains.
+
+C# Events
+C# Events were used to communicate between the GameManager class and the UIManager Class to update the UI in accordance with information from the Game Manager class.
+
+Coroutines 
+Used to allow toast notifications to fade in and out.
+
+Prefabs 
+GridCells, ShopSlots and InventorySlots are all created as prefabs that are created in runtime rather than prior to when they are needed this allows for advanced scalability. For example grid size can be increased easily, in the inspector, without having to change any code.
 ## 8.0 Testing
 
 ## References
