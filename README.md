@@ -219,7 +219,33 @@ Used to allow toast notifications to fade in and out.
 Prefabs 
 GridCells, ShopSlots and InventorySlots are all created as prefabs that are created in runtime rather than prior to when they are needed this allows for advanced scalability. For example grid size can be increased easily, in the inspector, without having to change any code.
 ## 8.0 Testing
-
+### 8.1 Testing Table
+![TestingTable.cs](./ReportImages/TestingTable.png)
+### 8.2 Requirement Analysis 
+Below is a table that analyses whether Forge has met the previously outlined requirements.
+| Requirement | Met? | Evidence |
+|------------|------|----------|
+| The player should be able to drag tiles that lock to the game grid | Yes | T02 |
+| The player should be able to generate balance per in game tick when a forge tile is connected to a mine tile | Yes | T04 |
+| The player should be able to place refiners between a mine and a forge tile to multiply the balance value generated per in game tick | Yes | T05, T06 |
+| The player should be able to read the current balance from the top of the screen and it should update with each in game tick | Yes | T16 |
+| The player should be able to purchase tiles from the shop window that will then appear in the inventory window | Yes | T12 |
+| The player should be able to complete goals of incremental difficulty to progress through the game | Yes | T07 |
+| The player should be able to adjust the position of tiles after they have been placed | Yes | T09 |
+| The player should unlock new types of tiles as they progress through the game | Yes | T14 |
+| The player should be able to drag tiles off of the grid and they should return to the inventory | Yes | T10 |
+| The player should get audio feedback when performing actions in the game | Partial | Audio system implemented, clips not assigned |
+| The player should receive notifications when a goal is completed | Yes | T15 |
+| The game will take place on an eight by eight grid | Yes | T01 |
+| Tiles can be placed in unoccupied grid cells | Yes | T02, T03 |
+| A tick mechanism will be utilised to update the balance value | Yes | T04 |
+| Every tick, the system will evaluate tile chains placed on the grid | Yes | T04, T05, T06 |
+| The value of tile chains will be calculated by multiplying the mines base value by the value of the refiners | Yes | T05, T06 |
+| Every tick the system will check if the goal has been met | Yes | T07 |
+| The goal is multiplied incrementally after it has been met | Yes | T07 |
+| The user will control the game using a computer mouse | Yes | All tests |
+| The game will utilise the Unity game engine | Yes | All tests |
+| The game will be responsive and any changes to the gameplay grid will be implemented before the next tick | Yes | T02, T09 |
 ## References
 Duggan, S. (2024) Unity UI — Drag and Drop Inventory System, Medium. Available at: https://medium.com/@sean.duggan/unity-ui-drag-and-drop-inventory-system-ae84d1173d3e (Accessed: 17 March 2026).
 Erol, I.U. (2022) Implementing the Singleton Design Pattern in Unity with C#, Medium. Available at: https://medium.com/@tzdevil/using-the-singleton-design-pattern-in-unity-c-226bf8aa5304 (Accessed: 17 March 2026).
